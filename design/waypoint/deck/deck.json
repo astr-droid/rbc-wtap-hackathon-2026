@@ -1,0 +1,54 @@
+{
+ "v": 5,
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-11-20T17:20:00Z"
+ },
+ "lists": "css",
+ "format": {
+  "v": 1,
+  "shared": [
+   "project/deck.css"
+  ]
+ },
+ "title": "Waypoint: 7-minute pitch",
+ "cover": "cover",
+ "order": [
+  "cover",
+  "problem",
+  "answer",
+  "me1",
+  "me2",
+  "team",
+  "cohort",
+  "chronicle",
+  "fit",
+  "viability",
+  "close"
+ ],
+ "sections": {
+  "s1": {
+   "description": "Speaker 1: the story and the one-line answer (0:00 to 1:20)",
+   "start": "cover"
+  },
+  "s2": {
+   "description": "Speaker 2: zoom Me and zoom My team (1:20 to 4:00)",
+   "start": "me1"
+  },
+  "s3": {
+   "description": "Speaker 3: the cohort, fit and viability (4:00 to 6:30)",
+   "start": "cohort"
+  },
+  "s4": {
+   "description": "Speaker 1: close and Q&A (6:30 to 7:00)",
+   "start": "close"
+  }
+ },
+ "faces": {
+  "manrope": {
+   "family": "Manrope",
+   "href": "https://fonts.googleapis.com/css2?family=Manrope:wght@300..800&display=swap"
+  }
+ },
+ "designSystems": []
+}

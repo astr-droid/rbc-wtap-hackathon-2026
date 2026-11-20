@@ -1,0 +1,112 @@
+{
+ "v": 3,
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-11-20T17:00:00Z"
+ },
+ "title": "Waypoint: your career, in motion",
+ "launch": {
+  "view": "canvas"
+ },
+ "pages": [],
+ "boards": {
+  "Main.dc.html": {
+   "x": 1520,
+   "y": 0,
+   "w": 1440,
+   "h": 1180,
+   "title": "2 \u00b7 My Map",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Onboard.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1440,
+   "h": 900,
+   "title": "1 \u00b7 Welcome chat",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Checkin.dc.html": {
+   "x": 0,
+   "y": 1300,
+   "w": 1440,
+   "h": 900,
+   "title": "5 \u00b7 Check-in",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Book.dc.html": {
+   "x": 1520,
+   "y": 1300,
+   "w": 1440,
+   "h": 1000,
+   "title": "6 \u00b7 Book a coffee chat",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Help.dc.html": {
+   "x": 3040,
+   "y": 1300,
+   "w": 1440,
+   "h": 900,
+   "title": "7 \u00b7 Ask for help",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Team.dc.html": {
+   "x": 3040,
+   "y": 0,
+   "w": 1440,
+   "h": 1180,
+   "title": "3 \u00b7 My Team",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Cohort.dc.html": {
+   "x": 4560,
+   "y": 0,
+   "w": 1440,
+   "h": 1180,
+   "title": "4 \u00b7 The Cohort",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Outreach.dc.html": {
+   "x": 4560,
+   "y": 1300,
+   "w": 1440,
+   "h": 1100,
+   "title": "8 \u00b7 Evidence and outreach",
+   "expand": "fill",
+   "is_interactive": true
+  }
+ },
+ "order": [
+  "Main.dc.html",
+  "Onboard.dc.html",
+  "Team.dc.html",
+  "Cohort.dc.html",
+  "Checkin.dc.html",
+  "Book.dc.html",
+  "Help.dc.html",
+  "Outreach.dc.html"
+ ],
+ "notes": {
+  "title": {
+   "x": 0,
+   "y": -260,
+   "text": "Waypoint: your career, in motion",
+   "kind": "title1",
+   "maxW": 6000
+  },
+  "row2": {
+   "x": 0,
+   "y": 1180,
+   "text": "Moments from the map: check-in, coffee chat, help, program outreach",
+   "w": 600
+  }
+ },
+ "designSystems": []
+}
