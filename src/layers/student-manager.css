@@ -1,0 +1,41 @@
+/* Person B: Me and My team panels and modal content.
+   Deliberately plain so the shell and map (Person A, src/styles.css) carry the visual design.
+   Reuses A's tokens (--ink, --muted, --line, --gold) and buttons. */
+
+.b-panel { border-top: 1px solid var(--line); }
+.b-panel > section { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.b-panel h3 { margin: 0 0 8px; }
+.b-empty { max-width: 560px; }
+
+.b-section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.b-section-head .segmented { margin-bottom: 6px; }
+
+.b-list, .b-ol { display: grid; gap: 10px; margin: 0; font-size: 13px; }
+.b-list { padding: 0; list-style: none; }
+.b-ol { padding-left: 18px; }
+.b-list strong, .b-ol strong { display: block; font-weight: 550; }
+.b-list span, .b-ol span { display: block; color: var(--muted); font-size: 12px; }
+
+.b-row { display: flex; width: 100%; justify-content: space-between; gap: 10px; padding: 0; border: 0; background: none; color: var(--ink); cursor: pointer; font-size: 13px; text-align: left; }
+.b-row.static { cursor: default; }
+.b-row > span:first-child { color: var(--ink); font-size: 13px; }
+.b-row:not(.static):hover > span:first-child { text-decoration: underline; }
+.b-list .b-state { color: var(--muted); white-space: nowrap; }
+.b-list .b-state.waiting-on-you { color: var(--gold); }
+
+.b-meta { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+.b-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 8px; }
+.b-actions .b-meta { margin: 0; }
+.b-toggle { display: flex; align-items: center; gap: 6px; margin-top: 6px; color: var(--muted); font-size: 12px; cursor: pointer; }
+.b-toggle input { margin: 0; accent-color: var(--mint-strong); }
+
+.b-alert { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 9px 23px; border-top: 1px solid var(--line); color: var(--gold); font-size: 12px; }
+.b-quote { margin: 0; font-size: 14px; }
+
+/* Modal content */
+.b-label { margin: 0 0 6px; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+.b-title { margin: 0; color: var(--ink); font-size: 17px; letter-spacing: 0; text-transform: none; }
+.b-options { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.b-options.stacked { flex-direction: column; }
+.b-options.stacked .secondary-button { padding: 10px 12px; text-align: left; }
+.b-options [aria-pressed='true'] { border-color: var(--mint); color: var(--mint); }
