@@ -2,7 +2,7 @@
 
 Every career starts with a conversation. Compass makes sure it continues.
 
-RBC hackathon, Fri 2026-11-20. Team of 5. 7-minute pitch plus Q&A.
+RBC hackathon, Fri 2026-11-20. Team of 3. 7-minute pitch plus Q&A.
 
 ## The prompt
 
