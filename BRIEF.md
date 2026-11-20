@@ -116,6 +116,7 @@ Other stories to seed: "The week 3 confidence dip", "The Vancouver connection ga
 - Lines up with tools RBC already uses: coffee chats book through the Outlook calendar and meet on Webex, workshops are the sessions the program team already runs, and points of contact come from Workday. Uses existing program data (event attendance, post-event feedback, mentor participation).
 - Exports a one-page summary a manager can attach to the existing review form. It supports the review and does not replace it.
 - No new login, no new platform to roll out.
+- A technical path into RBC: a Workday report read as a web service, Outlook calendar invites through Microsoft Graph, a Webex link, read-only access, and no write-back to HR systems. See the technical section.
 - What is new: the conversation starts from the student's ambition in week 1, the manager is briefed before problems show up, and one map serves the student, the manager and the program.
 
 **Business viability: reasonably implementable, not cost prohibitive.**
@@ -140,39 +141,42 @@ The pitch is one zoom out: from a single student, to their team, to the whole co
 | 1:20 to 3:00 | Speaker 2 | Zoom: Me. Ambition Card chat, a check-in tied to a goal, a route on the map with a coffee chat stop and a stop that is waiting on them, follow-up button |
 | 3:00 to 4:00 | Speaker 2 | Zoom: My team. Onboarding brief with project suggestions, then the pre-midterm brief. Stress what the manager does not see |
 | 4:00 to 5:30 | Speaker 3 | Zoom: The cohort. The AI region glows (9 want it, 2 mentors, 1 workshop), the "High interest, limited opportunity" story with evidence drawer, the quiet-stretch queue, one-click action to run a workshop or recruit mentors |
-| 5:30 to 6:30 | Speaker 3 | Fit and viability: lines up with Outlook, Webex and Workday, pilot plan, cost per student, privacy |
+| 5:30 to 6:30 | Speaker 3 | Fit and viability: the technical path into Workday, Outlook and Webex on one slide, then the pilot plan, cost per student, privacy |
 | 6:30 to 7:00 | Speaker 1 | Close: "Compass turns individual ambitions into opportunities, and individual experiences into better decisions for the whole program." |
 
 Speaking time: Speaker 1 about 1:50, Speaker 2 about 2:40, Speaker 3 about 2:30. Speaker 1 leads Q&A. Everyone answers questions about their own section.
 
 Rehearse twice with a timer. If over 7:00, cut the connection suggestion from the Me zoom first.
 
-## How it works with RBC's tools
+## Technical implementation into RBC
 
-**Principle:** Compass is the map, and the tools around it stay the same. We do not integrate technically at the hackathon. We show how each part of the map lines up with what RBC already uses: the Microsoft calendar, Webex for meetings, and Workday for points of contact.
+**Principle:** Compass adds one new surface, the map. It reads from and writes to tools RBC already runs. Everything below is a proposed design to confirm with RBC IT. At the hackathon, each connection is a synthetic table or a mock.
 
-| On the map | RBC tool it lines up with | What happens |
-|---|---|---|
-| Coffee chat stop | Outlook calendar and Webex | The student taps "Book a coffee chat". The mentor gets a proposed invite with the student's first name and topic. Once accepted, it appears in both Outlook calendars with a Webex link. After the meeting, the stop turns done |
-| Workshop stop | The Outlook and Webex sessions the program team already runs | The workshop is a stop on the routes it serves. Attending marks it done |
-| Points of contact: manager, key person, program contact, mentors | Workday | The people on the map, and where they sit in the org, come from Workday. A mentor shows with their team and title, and nothing else |
-| Where students talk to Compass | The team chat tool (to confirm) | Check-in nudges and the link that opens the map |
-| Reviews | The existing review process | A one-page export a manager can attach |
+**How the pieces fit:** the student, manager and program team open the map through RBC single sign-on and get nudges in the chat tool. Behind the map, the Compass service runs the workflows and calls an RBC-approved model. It connects to Workday, the Microsoft calendar, Webex and the program team's event records. It keeps two separate stores: a voice store (private, anonymous patterns) and a participation store (named, for outreach).
 
-**In the demo:** a mock Outlook invite with a Webex link for the coffee chat, and a synthetic org chart standing in for Workday.
+| Connection | How it would work | Access | Hackathon stand-in |
+|---|---|---|---|
+| **Workday** | A custom report (org, manager, title, start date) is enabled as a web service. The Compass service reads it with an integration system user. The start date triggers the week 1 intro | Read-only | Synthetic org chart table |
+| **Microsoft calendar** | When mentor and student agree, Compass creates an Outlook calendar invite through the Microsoft Graph calendar API | Creates invites only, with IT approval | Mock invite |
+| **Webex** | The invite carries a Webex link. Microsoft's built-in online meeting option covers Teams and Skype, so the link comes from Webex, for example through the Webex Scheduler add-in for Outlook. Whether RBC has it deployed is to confirm | Link only | Mock invite showing a Webex link |
+| **Workshop and event records** | Sign-ups and attendance the program team already keeps are imported. Workshops appear as stops, and attendance marks them done | Read-only | Synthetic workshop table |
+| **Chat tool** | Check-in nudges and the link that opens the map. Same backend whichever chat tool the AI group uses | Send messages | Faked chat window |
+| **Sign-in and model** | RBC single sign-on for the map. The workflows call whichever model RBC approves | Standard access | Our own model access, synthetic data only |
 
-**Guardrails:** Compass reads who people are and writes nothing back to HR systems. Voice data and participation data are stored separately. Anything real goes through RBC's usual privacy and security review. Synthetic data only at the hackathon.
+**Phases**
+- **Hackathon, today:** Clickable map on synthetic data. Every connection is a synthetic table or a mock. Pre-generated content with one live model call.
+- **Pilot, one cohort for one term:** Workday read-only, calendar invites, Webex links, workshop records imported. No write-back to HR systems. Hosted inside RBC and through RBC's privacy and security review.
+- **Scale:** More early talent programs on the same map, once the pilot shows what to keep and what policy RBC wants on participation.
 
-**Confirmed by the team:** Microsoft calendar, Webex meetings, Workday for points of contact. **Not confirmed:** which chat tool the AI group uses.
+**Questions we expect from RBC IT, and our answers:**
+- Where is the data hosted, and does it stay inside RBC?
+- What is the least access each connection needs?
+- Is there an audit log of who saw what?
+- Which model is approved for internal use, and what is retained?
+- Does it need a privacy impact review before a pilot?
+- Our answers: read-only wherever possible, calendar invites are the only write, two separate stores, hosted inside RBC, and nothing real moves until the privacy and security review is done.
 
-## Decisions locked
-
-- **Team:** 3 people. Everyone can build and present. Each owns one zoom level of the map in the pitch.
-- **Demo:** a clickable map on synthetic data. The chat is a faked Slack-style window inside the demo. A real Slack message is optional, never required.
-- **Hero moment:** the cohort map lighting up with a Chronicle story.
-- **First conversation:** week 1. The key person or program contact sends the intro, so the first message comes from a person ("Here is a 3-minute chat so we can plan your term around what you want"). Compass does the asking.
-- **Check-ins:** a chat nudge every 2 weeks with 2 or 3 tap replies. The map opens only if the student wants it.
-- **Manager brief:** a chat message that opens the My team layer of the map. A one-page export for the existing review form is a stretch goal.
+**Confirmed by the team:** Microsoft calendar, Webex meetings, Workday for points of contact. **Not confirmed:** the chat tool the AI group uses, and whether the Webex Scheduler add-in is deployed.
 
 ## Who does what
 
@@ -199,12 +203,13 @@ Split by zoom level. Each person builds their zoom level, presents it, and answe
 
 ## Build plan for today
 
-Four workflows in n8n Cloud Pro. No fully working app is needed, a creative foundation is the brief.
+Technical depth is not what is judged. The idea, the demo and the fit are. So build the prototype with hardcoded and pre-generated content first.
 
-1. **Intake:** triggered by the key person's intro message, chat input, LLM returns structured JSON, writes the Ambition Card and the routes, using the org chart table.
-2. **Check-in:** scheduled prompts tied to the card, quick-tap responses, wins log, coffee chat booking and stop status, follow-up flag with the identity choice.
-3. **Manager brief:** reads the card and sharing toggles, generates the onboarding and pre-midterm briefs with project suggestions.
-4. **Chronicle:** aggregates with the under-5 rule, compares demand with mentor and workshop supply, builds the quiet-stretch queue, generates stories with counts and counter-stories, queues follow-ups, handles the one-click actions.
+1. **Clickable map prototype:** the three zoom levels, the Ambition Card chat window, the manager brief panel, the Chronicle story panel and the mock Outlook invite. All content reads from one synthetic data file.
+2. **Pre-generate:** write the Ambition Card examples, manager briefs and the Chronicle story once from the synthetic data with the model, and store them.
+3. **One live moment:** the Ambition Card chat turns a typed answer into a card, with a cached card as the fallback.
+4. **Optional, only if ahead at the stitch point:** one n8n Cloud Pro workflow for the Ambition Card intake (chat in, structured card out). If there is no time, show a screenshot of it on the fit slide as proof of feasibility.
+5. **The technical path slide:** one slide on how Compass lands inside RBC, from the section above. This is where the technical depth goes.
 
 Two screens to polish: the **map** (with its three zoom levels) and the **Ambition Card chat**. The manager brief and Chronicle story open as panels on the map, not as separate pages.
 
@@ -226,6 +231,8 @@ Map design: nautical chart look, one accent for routes, soft regions for teams, 
 - **Isn't showing participation surveillance?** It shows what people did, not what they said, and it is the same kind of fact RBC already records for events. The student sees exactly what the program team sees. Voice stays private and anonymous, so honest feedback is not affected.
 - **Won't students feel pressure to perform?** It is possible, which is why there is no score, no private content in the view, and the student controls what goes into a return conversation. Whether participation counts toward a return offer is RBC's call.
 - **How does this connect to return offers?** The map continues from co-op to new grad. The student can attach their career story to the return conversation and choose what is in it.
+- **How would this actually connect to Workday and Outlook?** Workday can expose a custom report as a web service, which Compass reads with an integration user. For coffee chats, Compass creates an Outlook calendar invite through Microsoft Graph, and the Webex link comes from Webex.
+- **What does RBC IT have to do?** Enable one Workday report and an integration user, approve calendar access, confirm the Webex link method and the chat tool, and run the usual privacy and security review. Nothing is written back to HR systems.
 - **Why a map?** A career is a route from where you are to where you want to be. One picture serves the student, the manager and the program, and it makes who is connected visible.
 - **How do you find at-risk students without surveillance?** We look for a persistent gap between a stated goal and experience, shown first to the student. Program staff see anonymous counts and only the people who asked for follow-up.
 - **Will students answer honestly?** Anonymous by default, student controls what is shared, and answers get a useful response straight away, which reduces survey fatigue.
@@ -247,5 +254,8 @@ Map design: nautical chart look, one accent for routes, soft regions for teams, 
 
 ## Source
 
+- Microsoft Graph: creating Outlook calendar events as online meetings (Teams or Skype providers). https://learn.microsoft.com/en-us/graph/outlook-calendar-online-meetings
+- Webex Scheduler for Microsoft Outlook adds the Webex meeting link to a calendar invite. https://help.webex.com/en-us/article/nttajz6
+- Workday Reports-as-a-Service: custom reports enabled as web services. https://doc.workday.com/admin-guide/en-us/reporting-and-analytics/custom-reports-and-analytics/reports-as-a-service-raas-/dan1370796320263.html
 - RBC job posting for a Workday Core HCM domain lead, which also shows RBC runs Workday for HR. https://www.jobs.ca/job/22c44683-717e-46d2-8f97-25d8cb255546
 - NACE: 90% of students say hearing from employers two to three times per month is the optimal cadence, which is the basis for the biweekly check-in rhythm. https://naceweb.org/talent-acquisition/internships/its-important-for-employers-to-keep-lines-of-support-open-with-interns-when-they-return-to-campus
